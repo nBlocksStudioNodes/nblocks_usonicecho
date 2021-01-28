@@ -1,0 +1,103 @@
+{
+    "category": "Sensor",
+    "inputs": 1, 
+    "name": "LM75", 
+    "parameters": [
+        {
+            "default": "p28", 
+            "type": "raw", 
+            "name": "SDA Pin", 
+            "value": "p28", 
+            "options": [
+                ""
+            ]
+        }, 
+        {
+            "default": "p27", 
+            "type": "raw", 
+            "name": "SCL Pin", 
+            "value": "p27", 
+            "options": [
+                ""
+            ]
+        }, 
+        {
+            "default": "0x90", 
+            "type": "option", 
+            "name": "I2C Address", 
+            "value": "0x90", 
+            "options": [
+                "0x90\r", 
+                "0x92\r", 
+                "0x94\r", 
+                "0x96\r", 
+                "0x98\r", 
+                "0x9A\r", 
+                "0x9C\r", 
+                "0x9E\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                "\r", 
+                ""
+            ]
+        }, 
+        {
+            "default": "75.0", 
+            "type": "raw", 
+            "name": "Alarm Min Temp", 
+            "value": "75.0", 
+            "options": [
+                ""
+            ]
+        }, 
+        {
+            "default": "80.0", 
+            "type": "raw", 
+            "name": "Alarm Max Temp", 
+            "value": "80.0", 
+            "options": [
+                ""
+            ]
+        }, 
+        {
+            "default": 0, 
+            "type": "int", 
+            "name": "Comp Polarity", 
+            "value": 0, 
+            "options": [
+                ""
+            ]
+        }, 
+        {
+            "default": 100, 
+            "type": "int", 
+            "name": "Scale Factor", 
+            "value": 100, 
+            "options": [
+                ""
+            ]
+        }
+    ], 
+    "outputs": 1, 
+    "labels": {
+        "input": [], 
+        "output": []
+    }, 
+    "schematic_pins": {
+        "inputs": [
+            1
+        ], 
+        "outputs": [
+            2
+        ]
+    }, 
+    "repository": "https://github.com/nblocksStudioNodes/nblocks_lm75", 
+    "revision": ""
+}
