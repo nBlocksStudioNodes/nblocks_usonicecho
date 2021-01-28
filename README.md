@@ -1,5 +1,12 @@
 # USonicEcho
 
+<p align="center">
+<img
+src="img/01.PNG"
+width = 400
+/>
+</p>
+
 Ultrasonic distance sensor Node for the Parallax Ping
  
  *  Category: Sensor
@@ -20,5 +27,5 @@ uint32_t: Echo time in micro-seconds
 
 
 ## Example:
-[Ticker]-->[USonicPing]-->[StringFormat]-->[StringSerial]
+[Ticker]-->[USonicEcho]-->[StringFormat]-->[StringSerial]
 
