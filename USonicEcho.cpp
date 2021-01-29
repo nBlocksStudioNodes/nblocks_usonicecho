@@ -1,11 +1,13 @@
 #include "USonicEcho.h"
 
 nBlock_USonicEcho::nBlock_USonicEcho(PinName EchoPin) :
-			_inout(EchoPin), _int(EchoPin) {
-		
-	_Timer _tmr;	
-	_int.rise(&echostart);		// RISING EDGE ISR
-	_int.fall(&echoend);		// FALLING EDGE ISR
+			_pingPin(EchoPin), _pingInt(EchoPin) {
+
+    (this->_pingInt).rise(callback(this, &nBlock_USonicEcho::echostart));
+    (this->_pingInt).fall(callback(this, &nBlock_USonicEcho::echoend));
+	//_pingInt.rise(&nBlock_USonicEcho::echostart);		// RISING EDGE ISR
+	//_pingInt.fall(&echoend);		// FALLING EDGE ISR
+
 	_state = IDLE;
 	
 }
@@ -18,17 +20,17 @@ void nBlock_USonicEcho::triggerInput(nBlocks_Message message) {
 }
 
 void nBlock_USonicEcho::endFrame(void) {	
-	// If an Echo has been requested
+    // If an Echo has been requested
 	if (_flagReadRequested) {
 		_flagReadRequested = 0;	
 		if (_state == IDLE) {
-			pingPin.output();	// Trigger the Ultrasonic Tranmission with a LOW-HIGH-LOW
-			pingPin = 0;
+			_pingPin.output();	// Trigger the Ultrasonic Tranmission with a LOW-HIGH-LOW
+			_pingPin = 0;
 			wait_us(2);
-			pingPin = 1;
+			_pingPin = 1;
 			wait_us(4);			// The PING Board is triggered by a HIGH pulse of 2 or more microseconds.
-			pingPin = 0;
-			pingPin.input(); 	// the echo will rise after 800 us and fall after 200us for 3cm (minimum), or 18ms for 300cm (maximum)
+			_pingPin = 0;
+			_pingPin.input(); 	// the echo will rise after 800 us and fall after 200us for 3cm (minimum), or 18ms for 300cm (maximum)
 			_state = WAITINGECHO;	// The Ultrasonic Sensor is Triggered, ISR will update the _status and duration variables
 		}
 	}
