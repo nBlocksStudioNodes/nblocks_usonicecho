@@ -7,7 +7,7 @@ width = 400
 />
 </p>
 
-Ultrasonic distance sensor Node for the Parallax Ping
+Ultrasonic distance sensor Node for the Parallax Ping, implemented with **Interrupts**
  
  *  Category: Sensor
  *  HAL: mbed
@@ -23,8 +23,8 @@ Ultrasonic distance sensor Node for the Parallax Ping
  *  (Schematic pin 1) Trigger Input
 
 ## Parameters:
-  *  PinName: EchoPin: Pin to be used for the signal from/to the board
-  *  uint32_t: coefficient: Value to divide the 2 ways echo time measured:
+  *  PinName: **echoPin:** Pin to be used for the signal from/to the board
+  *  uint32_t: **coefficient:** Value to divide the 2 ways echo time measured:
      * 1 for raw 2 ways travel value in us
      * 2 for one way travel in us
      * 58 for one way in centimeters
