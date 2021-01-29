@@ -3,9 +3,11 @@
 nBlock_USonicEcho::nBlock_USonicEcho(PinName EchoPin) :
 			_inout(EchoPin), _int(EchoPin) {
 		
-	_int.rise(&echostart);
-	_int.fall(&echoend);
-	_state = IDLE;	
+	_Timer _tmr;	
+	_int.rise(&echostart);		// RISING EDGE ISR
+	_int.fall(&echoend);		// FALLING EDGE ISR
+	_state = IDLE;
+	
 }
 
 void nBlock_USonicEcho::triggerInput(nBlocks_Message message) {
@@ -26,22 +28,23 @@ void nBlock_USonicEcho::endFrame(void) {
 			pingPin = 1;
 			wait_us(4);			// The PING Board is triggered by a HIGH pulse of 2 or more microseconds.
 			pingPin = 0;
-			pingPin.input(); 	// the echo will rise after 800 us and fall after 200us for 3cm (minimum), and 25ms for 300cm (maximum)
-			_state = WAITINGECHO;
+			pingPin.input(); 	// the echo will rise after 800 us and fall after 200us for 3cm (minimum), or 18ms for 300cm (maximum)
+			_state = WAITINGECHO;	// The Ultrasonic Sensor is Triggered, ISR will update the _status and duration variables
 		}
 	}
 
+	// ISR has updated the _status and duration
 	if (_state == ECHOCOMPLETE) {
-		duration = tmr.read_us();
 		_state = IDLE; 
-		output[0] = duration;
-		available[0] = 1;
+		output[0] = duration;	// Update Node Output
+		available[0] = 1;		// Update Node Output Availability
+		_tmr.reset();
 	}
 
 return;
-}//endFrame
+}
 
-
+// Rising Edge ISR
 void nBlock_USonicEcho::echostart() {
 	if (_state == WAITINGECHO){
 		_tmr.start();
@@ -49,8 +52,10 @@ void nBlock_USonicEcho::echostart() {
 	}
 }
 
+// Falling Edge ISR
 void nBlock_USonicEcho::echoend() {
 	if (_state == ECHOSTARTED){
+		duration = _tmr.read_us();
 		_tmr.stop();
 		_state = ECHOCOMPLETE;
 	}

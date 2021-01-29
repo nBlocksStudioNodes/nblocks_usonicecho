@@ -15,7 +15,7 @@ Ultrasonic distance sensor Node for the Parallax Ping
  *  Author: N. Chalikias
 
 ## Output data types
-uint32_t: Echo time in micro-seconds
+uint32_t: Echo time in micro-seconds [??????????]
 
 ## Inputs / Outputs
 
