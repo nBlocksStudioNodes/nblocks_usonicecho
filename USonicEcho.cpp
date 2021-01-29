@@ -1,15 +1,12 @@
 #include "USonicEcho.h"
 
-nBlock_USonicEcho::nBlock_USonicEcho(PinName EchoPin) :
-			_pingPin(EchoPin), _pingInt(EchoPin) {
+nBlock_USonicEcho::nBlock_USonicEcho(PinName EchoPin, uint32_t coefficient) :
+	_pingPin(EchoPin), _pingInt(EchoPin) {
 
-    (this->_pingInt).rise(callback(this, &nBlock_USonicEcho::echostart));
+    divisor = coefficient;
+    (this->_pingInt).rise(callback(this, &nBlock_USonicEcho::echostart));   // this wont work-->    _pingInt.rise(&echostart);	
     (this->_pingInt).fall(callback(this, &nBlock_USonicEcho::echoend));
-	//_pingInt.rise(&nBlock_USonicEcho::echostart);		// RISING EDGE ISR
-	//_pingInt.fall(&echoend);		// FALLING EDGE ISR
-
-	_state = IDLE;
-	
+	_state = IDLE;	
 }
 
 void nBlock_USonicEcho::triggerInput(nBlocks_Message message) {
@@ -38,7 +35,7 @@ void nBlock_USonicEcho::endFrame(void) {
 	// ISR has updated the _status and duration
 	if (_state == ECHOCOMPLETE) {
 		_state = IDLE; 
-		output[0] = duration;	// Update Node Output
+		output[0] = duration/divisor;	// Update Node Output
 		available[0] = 1;		// Update Node Output Availability
 		_tmr.reset();
 	}

@@ -15,7 +15,7 @@ Ultrasonic distance sensor Node for the Parallax Ping
  *  Author: N. Chalikias
 
 ## Output data types
-uint32_t: Echo time in micro-seconds [??????????]
+uint32_t: Echo time in micro-seconds 
 
 ## Inputs / Outputs
 
@@ -23,7 +23,12 @@ uint32_t: Echo time in micro-seconds [??????????]
  *  (Schematic pin 1) Trigger Input
 
 ## Parameters:
- *  EchoPin: PinName:
+ *  PinName: EchoPin: Pin to be used for the signal from/to the board
+ *  uint32_t: coefficient: Value to divide the 2 ways echo time measured:
+   * 1 for raw 2 ways travel value in us
+   * 2 for one way travel in us
+   * 58 for one way in centimeters
+   * any other value that suits a use case
 
 
 ## Example:
